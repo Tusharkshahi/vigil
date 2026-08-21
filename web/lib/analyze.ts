@@ -31,10 +31,14 @@ export interface PackageRisk {
 interface SemVer { major: number; minor: number; patch: number }
 
 function parseSemVer(range: string): SemVer | null {
+  // Unresolvable ranges — treat as unknown
+  const trimmed = range.trim();
+  if (!trimmed || trimmed === '*' || trimmed === 'latest' || trimmed.startsWith('workspace:')) return null;
+
   // Strip everything that isn't a digit or dot, then parse
-  const cleaned = range.replace(/[^0-9.]/g, '').trim();
+  const cleaned = trimmed.replace(/[^0-9.]/g, '').trim();
   const parts = cleaned.split('.').map(Number);
-  if (!parts.length || isNaN(parts[0])) return null;
+  if (!parts.length || isNaN(parts[0]) || parts[0] === 0) return null;
   return { major: parts[0] ?? 0, minor: parts[1] ?? 0, patch: parts[2] ?? 0 };
 }
 
