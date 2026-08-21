@@ -50,11 +50,18 @@ export function normalizeReleases(pkg: string, raw: unknown, source: Release['so
       const r = item as Record<string, unknown>;
 
       const version =
-        String(r.version ?? r.tag ?? r.tag_name ?? r.name ?? '').replace(/^v/, '') || null;
-      const date = String(r.date ?? r.published_at ?? r.created_at ?? r.publishedAt ?? '');
-      const body = String(r.body ?? r.content ?? r.description ?? r.release_notes ?? '');
-      const title = String(r.title ?? r.name ?? version ?? '');
-      const url = String(r.url ?? r.html_url ?? r.link ?? '');
+        String(r.version ?? r.version_tag ?? r.tag ?? r.tag_name ?? r.name ?? '')
+          .replace(/^v/, '') || null;
+      const date = String(
+        r.date ?? r.publish_date ?? r.published_at ?? r.created_at ?? r.publishedAt ?? ''
+      );
+      const body = String(
+        r.body ?? r.release_notes_body ?? r.content ?? r.description ?? r.release_notes ?? ''
+      );
+      const title = String(r.title ?? r.release_title ?? r.name ?? version ?? '');
+      const url = String(
+        r.url ?? r.product_page_url ?? r.permalink_url ?? r.html_url ?? r.link ?? ''
+      );
 
       if (!version || !date) return null;
 

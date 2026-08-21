@@ -23,7 +23,8 @@ const BREAKING_COMMIT_NOTATION = /^(feat|fix|refactor|perf|build|ci|chore)!:\s*(
 const BREAKING_SECTION_HEADER = /^#{1,4}\s*(breaking\s+changes?|migration\s+guide|incompatible\s+changes?|removed\s+features?)/gim;
 
 // Warning emoji bullets (⚠️ or 💥 at start of line/bullet)
-const WARNING_EMOJI_BULLET = /^[\s\-*]*[⚠💥🚨]\s*(.+)/gm;
+// Note: ⚠️ is two codepoints (U+26A0 + U+FE0F), so we match both and strip in clean step
+const WARNING_EMOJI_BULLET = /^[\s\-*]*(?:⚠️?|💥|🚨)\s*(.+)/gm;
 
 // Lines containing removal/incompatibility language
 const REMOVAL_PATTERN = /\b(removed?|drops?|no longer (supports?|works?|available)|incompatible|must (now|be) (updated?|migrated?|changed?))\b/i;
@@ -64,10 +65,23 @@ function extractSection(body: string, headerRegex: RegExp): string[] {
 }
 
 /**
- * Clean up a raw matched line — remove bullet points, extra whitespace.
+ * Clean up a raw matched line — remove bullet points, emojis, extra whitespace.
  */
 function cleanLine(line: string): string {
-  return line.replace(/^[\s\-*•>]+/, '').trim();
+  return line
+    .replace(/^[\s\-*•>]+/, '')
+    .replace(/^[⚠️💥🚨\uFE0F]+\s*/, '') // strip leading warning emojis incl. variation selector
+    .trim();
+}
+
+/**
+ * Normalize a string to a dedup key — lowercase, strip emoji/punctuation prefix.
+ */
+function dedupKey(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/^[^a-z0-9]+/, '') // strip non-alpha prefix (emoji, bullets, etc.)
+    .slice(0, 80);
 }
 
 /**
@@ -82,15 +96,15 @@ export function classifyBreakingChanges(body: string): {
   const seen = new Set<string>();
 
   function addBreaking(summary: string, raw: string) {
-    const key = summary.toLowerCase().slice(0, 60);
-    if (seen.has(key)) return;
+    const key = dedupKey(summary);
+    if (seen.has(key) || summary.trim().startsWith('#')) return;
     seen.add(key);
     breaking.push({ summary: summary.slice(0, 200), type: 'breaking', raw });
   }
 
   function addDeprecated(summary: string, raw: string) {
-    const key = summary.toLowerCase().slice(0, 60);
-    if (seen.has(key)) return;
+    const key = dedupKey(summary);
+    if (seen.has(key) || summary.trim().startsWith('#')) return;
     seen.add(key);
     deprecated.push({ summary: summary.slice(0, 200), type: 'deprecated', raw });
   }
@@ -105,7 +119,10 @@ export function classifyBreakingChanges(body: string): {
   // 2. Conventional commit ! notation
   BREAKING_COMMIT_NOTATION.lastIndex = 0;
   while ((match = BREAKING_COMMIT_NOTATION.exec(body)) !== null) {
-    addBreaking(match[2].trim(), match[0]);
+    const extracted = match[2].trim();
+    addBreaking(extracted, match[0]);
+    // Also mark the full line as seen so the line scanner doesn't re-add it
+    seen.add(dedupKey(match[0].trim()));
   }
 
   // 3. Breaking change sections
@@ -131,6 +148,7 @@ export function classifyBreakingChanges(body: string): {
   for (const line of lines) {
     const trimmed = line.trim();
     if (trimmed.length < 10) continue;
+    if (trimmed.startsWith('#')) continue; // skip markdown headers
 
     if (DEPRECATION_PATTERN.test(trimmed)) {
       addDeprecated(cleanLine(trimmed).slice(0, 200), line);
