@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChangelogEntry",
+  "description": "A scraped changelog entry from a vendor changelog page",
+  "type": "object",
+  "required": ["title", "date", "content"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "date": {
+      "type": "string",
+      "minLength": 6
+    },
+    "version": {
+      "type": "string",
+      "description": "Version number if present"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 10,
+      "description": "The full changelog entry text"
+    },
+    "url": {
+      "type": "string",
+      "description": "Permalink to this changelog entry"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Category tags if present (breaking, feature, fix, etc.)"
+    }
+  }
+}

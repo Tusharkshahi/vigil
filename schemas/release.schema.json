@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Release",
+  "description": "A scraped release entry from GitHub releases or npm",
+  "type": "object",
+  "required": ["version", "date", "body"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Semver-like version string, e.g. 15.1.0 or v15.1.0"
+    },
+    "date": {
+      "type": "string",
+      "minLength": 6,
+      "description": "ISO date string or human-readable date"
+    },
+    "title": {
+      "type": "string",
+      "description": "Release title / name"
+    },
+    "body": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Full release notes markdown text"
+    },
+    "url": {
+      "type": "string",
+      "description": "Link to the release page"
+    }
+  }
+}

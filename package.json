@@ -1,0 +1,36 @@
+{
+  "name": "vigil",
+  "version": "0.1.0",
+  "description": "Self-healing engineering change intelligence — monitor breaking changes across your stack before they hit production",
+  "bin": {
+    "vigil": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["changelog", "breaking-changes", "self-healing", "scraper", "cli", "devtools"],
+  "author": "Tushar Shahi",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "8.17.1",
+    "axios": "1.7.9",
+    "better-sqlite3": "11.5.0",
+    "chalk": "5.4.1",
+    "commander": "12.1.0",
+    "dotenv": "16.4.7",
+    "node-cron": "3.0.3",
+    "ora": "8.1.1",
+    "semver": "7.6.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.12",
+    "@types/node": "22.10.1",
+    "@types/node-cron": "3.0.11",
+    "@types/semver": "7.5.8",
+    "typescript": "5.7.2"
+  }
+}
