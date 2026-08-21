@@ -1,0 +1,18 @@
+[
+  {
+    "version_tag": "v5.7.0",
+    "publish_date": "2024-11-22",
+    "release_title": "TypeScript 5.7",
+    "release_notes_body": "## TypeScript 5.7\n\n### Breaking Changes\n\n- BREAKING CHANGE: Under `--isolatedModules`, TypeScript now errors when a type-only import would be removed and the module is not resolvable. Previously this was silently allowed.\n- BREAKING CHANGE: The deprecated `--target ES3` and `--target ES5` options are removed when used with `--module nodenext` or `--module node16`.\n\n### New Features\n\n- Path rewriting for relative imports with `--rewriteRelativeImportExtensions`.\n- Validation of calls to `never`-returning functions.\n- Support for `--target ES2024`.\n- `${configDir}` template variable in `tsconfig.json` for portable configs.",
+    "product_page_url": "https://github.com/microsoft/TypeScript/releases/tag/v5.7.0",
+    "input": { "url": "https://github.com/microsoft/TypeScript/releases" }
+  },
+  {
+    "version_tag": "v5.6.0",
+    "publish_date": "2024-09-09",
+    "release_title": "TypeScript 5.6",
+    "release_notes_body": "## TypeScript 5.6\n\n### Breaking Changes\n\n- BREAKING CHANGE: Nullish and truthy checks on iterators are now errors. Writing `!!iterator` or `iterator ?? fallback` where `iterator` is an `Iterator` type now raises a compile error — these patterns are almost always logic bugs.\n\n### New Features\n\n- Iterator helper methods (`map`, `filter`, `take`, `drop`, `flatMap`) are now natively typed.\n- New `--noUncheckedSideEffectImports` flag to catch side-effect imports that resolve to nothing.",
+    "product_page_url": "https://github.com/microsoft/TypeScript/releases/tag/v5.6.0",
+    "input": { "url": "https://github.com/microsoft/TypeScript/releases" }
+  }
+]

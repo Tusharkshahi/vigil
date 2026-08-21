@@ -1,0 +1,18 @@
+[
+  {
+    "version_tag": "v19.0.0",
+    "publish_date": "2024-12-05",
+    "release_title": "React v19",
+    "release_notes_body": "## React 19\n\n### Breaking Changes\n\n- BREAKING CHANGE: `ReactDOM.render` is removed. Use `createRoot` from `react-dom/client` instead.\n- BREAKING CHANGE: `ReactDOM.hydrate` is removed. Use `hydrateRoot` from `react-dom/client` instead.\n- BREAKING CHANGE: Legacy string refs are removed. Migrate to callback refs or `useRef`.\n- BREAKING CHANGE: `defaultProps` on function components is removed. Use ES6 default parameters instead.\n- BREAKING CHANGE: `act` is no longer exported from `react-dom/test-utils`. Import it from `react` directly.\n- BREAKING CHANGE: `React.createFactory` is removed. Use JSX directly.\n- BREAKING CHANGE: `react-test-renderer` is deprecated and will be removed in a future release. Use `@testing-library/react` instead.\n\n### New Features\n\n- Actions: Functions using async transitions.\n- `use` API: Read resources in render.\n- React Server Components are now stable.\n- Document Metadata: Render `<title>` and `<meta>` anywhere in the tree.",
+    "product_page_url": "https://github.com/facebook/react/releases/tag/v19.0.0",
+    "input": { "url": "https://github.com/facebook/react/releases" }
+  },
+  {
+    "version_tag": "v18.3.0",
+    "publish_date": "2024-04-25",
+    "release_title": "React 18.3.0",
+    "release_notes_body": "## React 18.3\n\n### Deprecations (preparation for React 19)\n\n- Deprecated: `ReactDOM.render` — will be removed in React 19. Use `createRoot` instead.\n- Deprecated: `ReactDOM.hydrate` — will be removed in React 19. Use `hydrateRoot` instead.\n- Deprecated: `act` export from `react-dom/test-utils` — import from `react` instead.\n- Deprecated: string refs — migrate to callback refs.\n- Deprecated: `defaultProps` on function components.\n- Deprecated: `React.createFactory`.\n\nMigrate away from these APIs now to avoid errors when upgrading to React 19.",
+    "product_page_url": "https://github.com/facebook/react/releases/tag/v18.3.0",
+    "input": { "url": "https://github.com/facebook/react/releases" }
+  }
+]
