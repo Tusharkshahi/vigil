@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="tracking-tight">Vigil</span>
             </Link>
             <div className="flex items-center gap-6 text-sm text-zinc-400">
+              <Link href="/check" className="hover:text-zinc-100 transition-colors font-medium text-zinc-300">Check your stack</Link>
               <Link href="/report" className="hover:text-zinc-100 transition-colors">Report</Link>
               <Link href="/healing" className="hover:text-zinc-100 transition-colors">Healing Log</Link>
               <a
