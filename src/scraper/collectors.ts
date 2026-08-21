@@ -8,7 +8,7 @@ import { CollectorConfig } from '../types';
 
 export const COLLECTORS: Record<string, CollectorConfig> = {
   githubReleases: {
-    id: process.env.GITHUB_RELEASES_COLLECTOR_ID ?? '',
+    id: process.env.GH_RELEASES_COLLECTOR_ID ?? '',
     name: 'github-releases',
     targetPattern: 'https://github.com/{org}/{repo}/releases',
     schemaPath: 'schemas/release.schema.json',

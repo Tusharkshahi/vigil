@@ -75,7 +75,7 @@ Copy `.env.example` to `.env` and fill in:
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `BRIGHTDATA_API_KEY` | Yes | From `bdata login` or brightdata.com → Settings → API Token |
-| `GITHUB_RELEASES_COLLECTOR_ID` | Yes | `c_mt38dv2i1d2xga6atq` |
+| `GH_RELEASES_COLLECTOR_ID` | Yes | `c_mt38dv2i1d2xga6atq` |
 | `NPM_RELEASES_COLLECTOR_ID` | Yes | `c_mt38jj1t11smj3ek9e` |
 | `VENDOR_CHANGELOG_COLLECTOR_ID` | Yes | `c_mt38q9ng1pxd02lyaf` |
 | `SLACK_WEBHOOK_URL` | Optional | Slack Incoming Webhook for alerts |
