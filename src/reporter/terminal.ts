@@ -40,7 +40,8 @@ export function printReport(reports: ChangeReport[]): void {
       );
 
       for (const b of r.breaking.slice(0, 5)) {
-        console.log(chalk.gray('      •') + ' ' + chalk.white(b.summary));
+        const summary = b.summary.replace(/\*\*/g, '').replace(/`/g, '').trim();
+        console.log(chalk.gray('      •') + ' ' + chalk.white(summary));
       }
 
       if (r.breaking.length > 5) {

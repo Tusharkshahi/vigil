@@ -61,12 +61,22 @@ export async function runWithHealing(ctx: HealContext): Promise<unknown> {
     }
 
     // Build a targeted heal prompt from the null fields
-    const firstItem = Array.isArray(output) ? output[0] : output;
-    const releaseInspection = inspectRelease(firstItem as Parameters<typeof inspectRelease>[0]);
-    const healPrompt = buildHealPrompt(
-      releaseInspection.nullFields.length > 0 ? releaseInspection.nullFields : validation.nullFields,
-      `scraping ${ctx.targetUrl}`
-    );
+    let healPrompt: string;
+    const firstItem = Array.isArray(output) && output.length > 0 ? output[0] : null;
+
+    if (firstItem === null) {
+      // Scraper returned empty array — selector-level failure, not a field-level issue
+      healPrompt = buildHealPrompt(
+        ['version', 'date', 'body'],
+        `scraping ${ctx.targetUrl} — the scraper returned an empty array with no releases captured at all`
+      );
+    } else {
+      const releaseInspection = inspectRelease(firstItem as Parameters<typeof inspectRelease>[0]);
+      healPrompt = buildHealPrompt(
+        releaseInspection.nullFields.length > 0 ? releaseInspection.nullFields : validation.nullFields,
+        `scraping ${ctx.targetUrl}`
+      );
+    }
 
     log(`[${ctx.collectorName}] Triggering self-heal (attempt ${attempt})...`);
     log(`  Prompt: ${healPrompt}`);
