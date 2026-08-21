@@ -1,0 +1,26 @@
+[
+  {
+    "version_tag": "v15.1.0",
+    "publish_date": "2024-12-10",
+    "release_title": "Next.js 15.1",
+    "release_notes_body": "## Next.js 15.1\n\n### Breaking Changes\n\n- `unstable_after` is now stable as `after`. Rename all usages of `unstable_after` to `after` — the old name is removed.\n- `unstable_cacheTag` and `unstable_cacheLife` are now stable as `cacheTag` and `cacheLife`. The `unstable_` prefixed exports are removed.\n- The `instrumentation.js` file no longer supports a default export. Use named exports (`register`, `onRequestError`) instead — default export is removed.\n\n### New Features\n\n- React 19 is now the default for new projects.\n- `after()` is now stable — run code after the response has finished streaming.\n- Improved error debugging with source maps in production.",
+    "product_page_url": "https://github.com/vercel/next.js/releases/tag/v15.1.0",
+    "input": { "url": "https://github.com/vercel/next.js/releases" }
+  },
+  {
+    "version_tag": "v15.0.0",
+    "publish_date": "2024-10-21",
+    "release_title": "Next.js 15",
+    "release_notes_body": "## Next.js 15\n\n### Breaking Changes\n\n- BREAKING CHANGE: Async Request APIs — `cookies()`, `headers()`, `draftMode()`, `params` and `searchParams` in layouts and pages are now async. You must `await` them.\n- BREAKING CHANGE: `fetch` requests are no longer cached by default. Requests now default to `no-store`. Add `cache: 'force-cache'` to opt back in.\n- BREAKING CHANGE: `GET` Route Handlers are no longer cached by default. Use `export const dynamic = 'force-static'` to restore static behavior.\n- BREAKING CHANGE: React 18 peer dependency is removed. Next.js 15 requires React 19.\n- `next/headers` is no longer accessible in Client Components — this previously undocumented usage now throws.\n\n### Migration Guide\n\nUpdate your async request API calls — cookies, headers, and draftMode must be awaited. Update fetch calls that relied on default caching to explicitly pass `cache: 'force-cache'`.",
+    "product_page_url": "https://github.com/vercel/next.js/releases/tag/v15.0.0",
+    "input": { "url": "https://github.com/vercel/next.js/releases" }
+  },
+  {
+    "version_tag": "v14.2.0",
+    "publish_date": "2024-04-11",
+    "release_title": "Next.js 14.2",
+    "release_notes_body": "## Next.js 14.2\n\n### New Features\n\n- Turbopack Development is now stable: `next dev --turbo` exits beta.\n- Build and Production performance improvements.\n- CSS bundling improvements.",
+    "product_page_url": "https://github.com/vercel/next.js/releases/tag/v14.2.0",
+    "input": { "url": "https://github.com/vercel/next.js/releases" }
+  }
+]

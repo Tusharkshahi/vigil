@@ -21,6 +21,7 @@ program
   .option('-o, --output <path>', 'Save JSON report to a file')
   .option('--json', 'Output raw JSON to stdout')
   .option('--fresh', 'Re-check all releases, not just unseen ones')
+  .option('--demo', 'Run with pre-captured fixture data (no API key needed)')
   .action(async (packages: string[], opts) => {
     await runCheck(packages, {
       ...opts,

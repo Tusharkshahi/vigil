@@ -16,6 +16,21 @@ interface CheckOptions {
   output?: string;
   json?: boolean;
   fresh?: boolean;
+  demo?: boolean;
+}
+
+// Map package names to demo fixture files (real release data, pre-captured)
+const DEMO_FIXTURES: Record<string, string> = {
+  nextjs: path.resolve(__dirname, '../../demo/fixtures/nextjs-releases.json'),
+  next: path.resolve(__dirname, '../../demo/fixtures/nextjs-releases.json'),
+  react: path.resolve(__dirname, '../../demo/fixtures/react-releases.json'),
+  typescript: path.resolve(__dirname, '../../demo/fixtures/typescript-releases.json'),
+};
+
+function loadDemoFixture(pkg: string): unknown | null {
+  const fixturePath = DEMO_FIXTURES[pkg.toLowerCase()];
+  if (!fixturePath || !fs.existsSync(fixturePath)) return null;
+  return JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
 }
 
 /**
@@ -71,26 +86,42 @@ export async function runCheck(packages: string[], opts: CheckOptions): Promise<
     const spinner = opts.json ? null : ora(`Checking ${pkg}...`).start();
 
     try {
-      const raw = await runWithHealing({
-        collectorId: githubCollector.id,
-        collectorName: `${pkg}-releases`,
-        targetUrl,
-        schemaPath: githubCollector.schemaPath,
-        onProgress: (msg) => { if (spinner) spinner.text = msg; },
-      });
+      // Demo mode: load pre-captured fixture data instead of calling the scraper API
+      let raw: unknown;
+      if (opts.demo) {
+        const fixture = loadDemoFixture(pkg);
+        if (!fixture) {
+          if (spinner) spinner.warn(`${pkg} — no demo fixture available, skipping`);
+          continue;
+        }
+        raw = fixture;
+        if (spinner) spinner.text = `${pkg} — loaded demo data`;
+        await new Promise((r) => setTimeout(r, 600)); // brief pause for realism
+      } else {
+        raw = await runWithHealing({
+          collectorId: githubCollector.id,
+          collectorName: `${pkg}-releases`,
+          targetUrl,
+          schemaPath: githubCollector.schemaPath,
+          onProgress: (msg) => { if (spinner) spinner.text = msg; },
+        });
+      }
 
       const releases = normalizeReleases(pkg, raw, 'github');
-      const cutoff = new Date();
-      cutoff.setDate(cutoff.getDate() - lookbackDays);
 
-      // Filter to recent releases
-      const recent = releases.filter((r) => {
-        const d = new Date(r.date);
-        return !isNaN(d.getTime()) && d >= cutoff;
-      });
+      // In demo mode, skip the date filter so fixture data is always shown
+      let recent = releases;
+      if (!opts.demo) {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - lookbackDays);
+        recent = releases.filter((r) => {
+          const d = new Date(r.date);
+          return !isNaN(d.getTime()) && d >= cutoff;
+        });
+      }
 
-      // Only process new ones (not seen before) unless --fresh
-      const toProcess = opts.fresh ? recent : findNewReleases(pkg, recent);
+      // Only process new ones (not seen before) unless --fresh or --demo
+      const toProcess = (opts.fresh || opts.demo) ? recent : findNewReleases(pkg, recent);
 
       for (const release of toProcess) {
         const { breaking, deprecated } = classifyBreakingChanges(release.body);
