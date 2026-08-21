@@ -1,0 +1,98 @@
+name: Vigil — Breaking Change Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Check for breaking changes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check for breaking changes
+        id: vigil
+        run: |
+          node dist/index.js check --file package.json --json --days 14 > vigil-report.json || true
+          cat vigil-report.json
+        env:
+          BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
+          GITHUB_RELEASES_COLLECTOR_ID: ${{ secrets.GITHUB_RELEASES_COLLECTOR_ID }}
+          NPM_RELEASES_COLLECTOR_ID: ${{ secrets.NPM_RELEASES_COLLECTOR_ID }}
+          VENDOR_CHANGELOG_COLLECTOR_ID: ${{ secrets.VENDOR_CHANGELOG_COLLECTOR_ID }}
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let report;
+            try {
+              report = JSON.parse(fs.readFileSync('vigil-report.json', 'utf8'));
+            } catch {
+              console.log('No report generated');
+              return;
+            }
+
+            const breaking = report.packages?.filter(p => p.hasBreaking) ?? [];
+            if (breaking.length === 0) {
+              console.log('No breaking changes found — skipping comment');
+              return;
+            }
+
+            const lines = [
+              '## ⚠️ Vigil — Breaking Changes Detected',
+              '',
+              `**${breaking.length} package${breaking.length > 1 ? 's' : ''} in your stack released breaking changes in the last 14 days:**`,
+              '',
+            ];
+
+            for (const pkg of breaking) {
+              lines.push(`### \`${pkg.package}\` ${pkg.version}`);
+              lines.push(`Released: ${pkg.date} · [Release notes](${pkg.url})`);
+              lines.push('');
+              for (const b of pkg.breaking.slice(0, 5)) {
+                lines.push(`- ${b.summary}`);
+              }
+              if (pkg.breaking.length > 5) {
+                lines.push(`- _...and ${pkg.breaking.length - 5} more_`);
+              }
+              lines.push('');
+            }
+
+            lines.push('---');
+            lines.push('_Detected by [Vigil](https://github.com/Tusharkshahi/vigil) — self-healing engineering change intelligence_');
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: lines.join('\n'),
+            });
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vigil-report
+          path: vigil-report.json
+          retention-days: 30
