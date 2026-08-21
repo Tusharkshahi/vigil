@@ -40,13 +40,16 @@ export async function fetchOrgRepos(
   token?: string
 ): Promise<GithubRepo[]> {
   const perPage = token ? 50 : 20;
-  const url = `https://api.github.com/orgs/${encodeURIComponent(org)}/repos?per_page=${perPage}&sort=updated&type=public`;
+  // type=public requires authentication — omit when no token is present
+  const typeParam = token ? '&type=public' : '';
+  const url = `https://api.github.com/orgs/${encodeURIComponent(org)}/repos?per_page=${perPage}&sort=updated${typeParam}`;
   const res = await fetch(url, { headers: makeHeaders(token) });
 
   if (res.status === 404) {
-    // fall back to user
+    // fall back to user endpoint (handles individuals)
     return fetchUserRepos(org, token);
   }
+  if (res.status === 401) throw new Error('GitHub returned 401 — if you added a token, check it has the `repo` or `read:org` scope');
   if (res.status === 403) throw new Error('GitHub rate limit hit — add a Personal Access Token to continue');
   if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
 
