@@ -146,7 +146,7 @@ Add to your repo to get PR comments when breaking changes are detected:
   uses: Tusharkshahi/vigil@main
   env:
     BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
-    GITHUB_RELEASES_COLLECTOR_ID: ${{ secrets.GITHUB_RELEASES_COLLECTOR_ID }}
+    GH_RELEASES_COLLECTOR_ID: ${{ secrets.GH_RELEASES_COLLECTOR_ID }}
     NPM_RELEASES_COLLECTOR_ID: ${{ secrets.NPM_RELEASES_COLLECTOR_ID }}
     VENDOR_CHANGELOG_COLLECTOR_ID: ${{ secrets.VENDOR_CHANGELOG_COLLECTOR_ID }}
 ```
@@ -158,7 +158,7 @@ Add to your repo to get PR comments when breaking changes are detected:
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `BRIGHTDATA_API_KEY` | Yes | From `bdata login` or Bright Data dashboard |
-| `GITHUB_RELEASES_COLLECTOR_ID` | Yes | `c_mt38dv2i1d2xga6atq` |
+| `GH_RELEASES_COLLECTOR_ID` | Yes | `c_mt38dv2i1d2xga6atq` |
 | `NPM_RELEASES_COLLECTOR_ID` | Yes | `c_mt38jj1t11smj3ek9e` |
 | `VENDOR_CHANGELOG_COLLECTOR_ID` | Yes | `c_mt38q9ng1pxd02lyaf` |
 | `SLACK_WEBHOOK_URL` | Optional | For Slack alerts |
