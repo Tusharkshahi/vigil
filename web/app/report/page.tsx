@@ -99,19 +99,36 @@ export default function ReportPage() {
       <div className="mb-10">
         <div className="flex items-center gap-2 mb-2">
           <span className="text-red-500">◈</span>
-          <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest">Latest Scan Report</span>
+          <span className="text-xs font-mono text-zinc-500 uppercase tracking-widest">Breaking Change Registry</span>
         </div>
-        <h1 className="text-3xl font-bold text-white mb-2">Breaking Change Report</h1>
-        <p className="text-zinc-400 text-sm">
-          Scraped via Bright Data Scraper Studio · {REPORTS.reduce((s, r) => s + r.releases.length, 0)} releases analysed across {REPORTS.length} packages
+        <h1 className="text-3xl font-bold text-white mb-2">Monitored Package Feed</h1>
+        <p className="text-zinc-400 text-sm max-w-2xl">
+          A reference of every breaking change Vigil has tracked across all monitored packages —
+          scraped from GitHub releases and npm changelogs via Bright Data.
+          Use <a href="/check" className="text-zinc-300 underline underline-offset-2 hover:text-white transition-colors">Check your stack</a> to see which of these affect your specific project.
         </p>
       </div>
 
+      {/* Stats strip */}
+      <div className="grid grid-cols-3 gap-3 mb-8">
+        {[
+          { val: REPORTS.length, label: 'packages monitored' },
+          { val: REPORTS.reduce((s, r) => s + r.releases.length, 0), label: 'releases tracked' },
+          { val: REPORTS.reduce((s, r) => s + r.totalBreaking, 0), label: 'breaking changes logged' },
+        ].map(({ val, label }) => (
+          <div key={label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center">
+            <div className="text-2xl font-bold text-white tabular-nums">{val}</div>
+            <div className="text-xs text-zinc-500 mt-0.5">{label}</div>
+          </div>
+        ))}
+      </div>
+
       {breaking.length > 0 && (
-        <div className="bg-red-950/30 border border-red-900/40 rounded-xl p-4 mb-8 text-sm text-red-300">
-          <strong className="text-red-400">Action required:</strong>{' '}
-          {breaking.length} package{breaking.length !== 1 ? 's' : ''} have breaking changes that may affect your application.
-          Review migration guides before upgrading.
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-6 text-sm text-zinc-400">
+          <strong className="text-zinc-200">Not sure if these affect you?</strong>{' '}
+          Paste your <code className="font-mono text-xs text-zinc-300">package.json</code> on the{' '}
+          <a href="/check" className="text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors">Check your stack</a>{' '}
+          page — Vigil will cross-reference your exact versions and show only the changes that are ahead of where you are.
         </div>
       )}
 
