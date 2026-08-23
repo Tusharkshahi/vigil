@@ -1,0 +1,18 @@
+[
+  {
+    "version_tag": "v8.0.0",
+    "publish_date": "2023-11-01",
+    "release_title": "Mongoose 8.0.0",
+    "release_notes_body": "## Mongoose 8.0.0\n\n### Breaking Changes\n\n- BREAKING CHANGE: `strictQuery` now defaults to `false` — queries no longer filter out fields not in the schema by default. Set `mongoose.set('strictQuery', true)` to restore old behavior.\n- BREAKING CHANGE: Removed callback support from `Model.findOne()`, `Model.findById()`, `Model.find()`, `Model.save()`, and all other model methods — all methods now return Promises only.\n- BREAKING CHANGE: Removed `mongoose.connect()` callback support — use `.then()` or `await` instead.\n- BREAKING CHANGE: `Document.prototype.equals()` now uses deep equality for embedded documents instead of `_id` comparison.\n- BREAKING CHANGE: `Model.bulkWrite()` now throws on unordered operations that partially fail instead of returning a result with errors.\n- BREAKING CHANGE: Dropped support for MongoDB server < 5.0 and Node.js < 16.20.1.\n- BREAKING CHANGE: `Schema.prototype.add()` now throws if you add a path that conflicts with an existing path.\n- BREAKING CHANGE: `Query.prototype.explain()` now returns the raw MongoDB explain output without wrapping.\n\n### Migration Guide\n\nReplace all callback-style Mongoose calls with async/await or Promise chains. Update `strictQuery` setting explicitly if your queries relied on the old strict filtering behavior.",
+    "product_page_url": "https://github.com/Automattic/mongoose/releases/tag/8.0.0",
+    "input": { "url": "https://github.com/Automattic/mongoose/releases" }
+  },
+  {
+    "version_tag": "v7.6.0",
+    "publish_date": "2023-10-04",
+    "release_title": "Mongoose 7.6.0",
+    "release_notes_body": "## Mongoose 7.6.0\n\n### New Features\n\n- Added `Model.findOneAndReplace()` with `returnDocument` option.\n- Improved TypeScript generic inference for `lean()` queries.\n- Performance improvements for populate with large datasets.",
+    "product_page_url": "https://github.com/Automattic/mongoose/releases/tag/7.6.0",
+    "input": { "url": "https://github.com/Automattic/mongoose/releases" }
+  }
+]

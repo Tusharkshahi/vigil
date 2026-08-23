@@ -2,12 +2,28 @@ import { REPORTS } from './data';
 
 // npm package name → our report key (react-dom counts as react, etc.)
 const ALIASES: Record<string, string> = {
+  // React
+  react: 'react',
+  'react-dom': 'react',           // dedup — same breaking changes as react
+  'react-server-dom-webpack': 'react',
+  // Next.js
   next: 'next',
   nextjs: 'next',
-  react: 'react',
-  'react-dom': 'react',          // dedup — same breaking changes as react
+  // TypeScript
   typescript: 'typescript',
   ts: 'typescript',
+  // Express
+  express: 'express',
+  // ESLint
+  eslint: 'eslint',
+  '@eslint/js': 'eslint',
+  // Mongoose
+  mongoose: 'mongoose',
+  // Jest
+  jest: 'jest',
+  '@jest/core': 'jest',
+  'jest-circus': 'jest',
+  'babel-jest': 'jest',
 };
 
 export interface ReleaseRisk {

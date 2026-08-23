@@ -1,0 +1,18 @@
+[
+  {
+    "version_tag": "v9.0.0",
+    "publish_date": "2024-04-05",
+    "release_title": "ESLint 9.0.0",
+    "release_notes_body": "## ESLint 9.0.0\n\n### Breaking Changes\n\n- BREAKING CHANGE: Flat config is now the default and only supported config format — `.eslintrc.*` and `eslintrc.js` files are no longer loaded. Migrate to `eslint.config.js`.\n- BREAKING CHANGE: Node.js < 18.18.0 and Node.js 19 are no longer supported.\n- BREAKING CHANGE: Removed `--rulesdir` CLI flag — use plugins instead.\n- BREAKING CHANGE: Removed `--ext` CLI flag — file extension filtering is now handled in the config file.\n- BREAKING CHANGE: Removed `eslint:recommended` changes — several rules were added or removed from the preset.\n- BREAKING CHANGE: The `CodePath#currentSegments` property is removed from the rule context.\n- BREAKING CHANGE: Removed `context.getScope()` — use `sourceCode.getScope(node)` instead.\n- BREAKING CHANGE: Removed `context.getAncestors()` — use `sourceCode.getAncestors(node)` instead.\n- BREAKING CHANGE: Removed `context.getDeclaredVariables()` — use `sourceCode.getDeclaredVariables(node)` instead.\n- BREAKING CHANGE: The `linter.verify()` method no longer accepts string config filenames.\n- BREAKING CHANGE: Formatters `compact`, `jslint-xml`, `junit`, `tap`, `unix` and `visualstudio` are removed from the core package.\n\n### Migration Guide\n\nRun `npx @eslint/migrate-config .eslintrc.json` to auto-migrate your config to flat format. Replace removed context methods with `sourceCode.*` equivalents.",
+    "product_page_url": "https://github.com/eslint/eslint/releases/tag/v9.0.0",
+    "input": { "url": "https://github.com/eslint/eslint/releases" }
+  },
+  {
+    "version_tag": "v8.57.0",
+    "publish_date": "2024-03-20",
+    "release_title": "ESLint 8.57.0",
+    "release_notes_body": "## ESLint 8.57.0\n\n### New Features\n\n- Added support for flat config in `@eslint/eslintrc` compatibility utilities.\n- Improved performance for large codebases.\n- Bug fixes for scope analysis.",
+    "product_page_url": "https://github.com/eslint/eslint/releases/tag/v8.57.0",
+    "input": { "url": "https://github.com/eslint/eslint/releases" }
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "version_tag": "v5.0.0",
+    "publish_date": "2024-10-15",
+    "release_title": "Express 5.0",
+    "release_notes_body": "## Express 5.0\n\n### Breaking Changes\n\n- BREAKING CHANGE: Path route matching uses path-to-regexp v8 — named parameters now require explicit syntax like `:id(\\d+)`. Patterns like `:id(*)` are no longer valid.\n- BREAKING CHANGE: Async errors in route handlers and middleware are now automatically forwarded to `next(err)` — remove manual try/catch wrappers that call `next(err)` or your error handler will be called twice.\n- BREAKING CHANGE: `req.query` is no longer parsed with `qs` by default — nested object syntax like `?a[b]=1` must be explicitly enabled via `app.set('query parser', 'extended')`.\n- BREAKING CHANGE: `app.router` property is removed — it was deprecated in Express 4.\n- BREAKING CHANGE: `req.param()` method is removed — use `req.params`, `req.body`, or `req.query` directly.\n- BREAKING CHANGE: `res.json()` no longer accepts a status code as the first argument — use `res.status(code).json(data)`.\n- BREAKING CHANGE: `res.redirect()` with a relative URL now respects the mount path of the app.\n- BREAKING CHANGE: Node.js < 18 is no longer supported.\n\n### Migration Guide\n\nUpdate all route patterns to path-to-regexp v8 syntax. Remove manual async error forwarding — Express 5 handles it natively. Replace `req.param()` calls with explicit `req.params`, `req.query`, or `req.body`.",
+    "product_page_url": "https://github.com/expressjs/express/releases/tag/v5.0.0",
+    "input": { "url": "https://github.com/expressjs/express/releases" }
+  },
+  {
+    "version_tag": "v4.21.0",
+    "publish_date": "2024-09-11",
+    "release_title": "Express 4.21.0",
+    "release_notes_body": "## Express 4.21.0\n\n### New Features\n\n- Updated `finalhandler` to v1.3.1 for improved error handling.\n- Updated `serve-static` to v1.16.2.\n- Various dependency security updates.",
+    "product_page_url": "https://github.com/expressjs/express/releases/tag/4.21.0",
+    "input": { "url": "https://github.com/expressjs/express/releases" }
+  }
+]

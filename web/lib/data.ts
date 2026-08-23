@@ -1,6 +1,10 @@
 import nextjsReleases from './nextjs-releases.json';
 import reactReleases from './react-releases.json';
 import typescriptReleases from './typescript-releases.json';
+import expressReleases from './express-releases.json';
+import eslintReleases from './eslint-releases.json';
+import mongooseReleases from './mongoose-releases.json';
+import jestReleases from './jest-releases.json';
 
 export interface RawRelease {
   version_tag: string;
@@ -128,6 +132,10 @@ export const REPORTS: PackageReport[] = [
   processReleases(reactReleases as RawRelease[], 'react', 'npm'),
   processReleases(nextjsReleases as RawRelease[], 'next', 'npm'),
   processReleases(typescriptReleases as RawRelease[], 'typescript', 'npm'),
+  processReleases(expressReleases as RawRelease[], 'express', 'npm'),
+  processReleases(eslintReleases as RawRelease[], 'eslint', 'npm'),
+  processReleases(mongooseReleases as RawRelease[], 'mongoose', 'npm'),
+  processReleases(jestReleases as RawRelease[], 'jest', 'npm'),
 ];
 
 export const STATS = {

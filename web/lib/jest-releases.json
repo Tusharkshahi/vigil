@@ -1,0 +1,18 @@
+[
+  {
+    "version_tag": "v29.0.0",
+    "publish_date": "2022-08-25",
+    "release_title": "Jest 29.0.0",
+    "release_notes_body": "## Jest 29.0.0\n\n### Breaking Changes\n\n- BREAKING CHANGE: `jest.resetModules()` now also clears the module registry cache — previously only the mock registry was cleared.\n- BREAKING CHANGE: `--experimental-vm-modules` is now required to use ES module support via `jest-environment-node` with native ESM.\n- BREAKING CHANGE: `testEnvironment` defaults to `'node'` — the previous default of `'jsdom'` was removed. Add `@jest-environment jsdom` docblock or set explicitly in config for browser-like tests.\n- BREAKING CHANGE: Dropped support for Node.js 12 and 14.\n- BREAKING CHANGE: `jest.mocked()` no longer accepts a second `shallow` argument — the argument is ignored and removed.\n- BREAKING CHANGE: `fakeTimers.useFakeTimers()` using the `'legacy'` implementation is removed — use `'modern'` or the default.\n- BREAKING CHANGE: `expect.assertions()` and `expect.hasAssertions()` now throw synchronously instead of via `done` callback.\n\n### Migration Guide\n\nAdd `testEnvironment: 'jsdom'` to your `jest.config.js` if you were relying on the old default. Update any code using the removed `shallow` parameter of `jest.mocked()`.",
+    "product_page_url": "https://github.com/jestjs/jest/releases/tag/v29.0.0",
+    "input": { "url": "https://github.com/jestjs/jest/releases" }
+  },
+  {
+    "version_tag": "v29.7.0",
+    "publish_date": "2023-09-07",
+    "release_title": "Jest 29.7.0",
+    "release_notes_body": "## Jest 29.7.0\n\n### New Features\n\n- Improved test runner performance for large test suites.\n- Added `--shard` flag improvements for parallel CI runs.\n- TypeScript type definitions improvements for `expect` matchers.",
+    "product_page_url": "https://github.com/jestjs/jest/releases/tag/v29.7.0",
+    "input": { "url": "https://github.com/jestjs/jest/releases" }
+  }
+]
