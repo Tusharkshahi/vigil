@@ -195,9 +195,33 @@ npm link
 vigil check react next typescript --demo
 ```
 
-### GitHub Action
+### Slack and Discord Alerts
 
-Add to your repo to get PR annotations when breaking changes are detected:
+Subscribe to packages and get notified automatically whenever a new breaking release is detected:
+
+```bash
+# Subscribe to packages you care about
+node dist/index.js subscribe add react next express prisma vite
+
+# Set your Slack incoming webhook
+node dist/index.js subscribe set-slack https://hooks.slack.com/services/T.../B.../...
+
+# Or Discord webhook
+node dist/index.js subscribe set-discord https://discord.com/api/webhooks/.../...
+
+# View your subscriptions
+node dist/index.js subscribe list
+```
+
+Alerts are sent automatically after each scan. The message includes the package name, version, breaking change count, a bullet-point summary, and a link to the release notes.
+
+**To get a Slack webhook URL:** Slack → Your workspace → Apps → Incoming Webhooks → Add to Slack → choose a channel → copy the webhook URL.
+
+**To get a Discord webhook URL:** Discord channel → Edit Channel → Integrations → Webhooks → New Webhook → copy URL.
+
+### GitHub Actions
+
+**PR check** — annotates pull requests when an upgrade introduces breaking changes:
 
 ```yaml
 # .github/workflows/vigil-check.yml
@@ -208,6 +232,25 @@ Add to your repo to get PR annotations when breaking changes are detected:
     GH_RELEASES_COLLECTOR_ID: ${{ secrets.GH_RELEASES_COLLECTOR_ID }}
     NPM_RELEASES_COLLECTOR_ID: ${{ secrets.NPM_RELEASES_COLLECTOR_ID }}
     VENDOR_CHANGELOG_COLLECTOR_ID: ${{ secrets.VENDOR_CHANGELOG_COLLECTOR_ID }}
+```
+
+**Nightly scan** — runs every day at 08:00 UTC and posts results to Slack/Discord:
+
+```yaml
+# .github/workflows/nightly-scan.yml
+on:
+  schedule:
+    - cron: '0 8 * * *'
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci && npm run build
+      - run: node dist/index.js check react next express prisma vite --json --output report.json
+      env:
+        BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 ```
 
 ---
@@ -298,3 +341,10 @@ vigil/
 - **Built with**: Bright Data Scraper Studio CLI
 - **AI assistance**: Devin (disclosed per hackathon rules)
 - **License**: MIT
+
+### What's next
+
+- More packages — lodash, axios, webpack, tailwindcss all have had breaking major releases
+- Live webhook mode — fire an alert the moment a new breaking version is scraped, not on the next scheduled scan
+- PR diff annotation — highlight the exact lines of code affected by a detected breaking change
+- Community scraper contributions — let users submit scraper targets for packages they care about

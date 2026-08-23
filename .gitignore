@@ -13,3 +13,9 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Local scripts — do not push
+DEMO_SCRIPT.md
+*-raw.json
+*-npm.json
+*-changelog.json
