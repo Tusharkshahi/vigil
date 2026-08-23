@@ -4,6 +4,8 @@
 
 > Built for the [WeMakeDevs Into the Scrape-Verse hackathon](https://www.wemakedevs.org/hackathons/scrape-verse) using [Bright Data Scraper Studio](https://brightdata.com/products/scraper-studio).
 
+**[vigil-psi-liart.vercel.app](https://vigil-psi-liart.vercel.app)** — live dashboard, no install required
+
 ---
 
 ![Vigil homepage](images/Homepage.png)
