@@ -165,19 +165,24 @@ function ResultsTable({ results }: { results: PackageRisk[] }) {
       )}
       {untracked.length > 0 && (
         <details className="group">
-          <summary className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors cursor-pointer list-none flex items-center gap-1 py-1">
-            <span className="group-open:rotate-90 transition-transform inline-block">▶</span>
-            {untracked.length} untracked package{untracked.length !== 1 ? 's' : ''} (not yet monitored by Vigil)
+          <summary className="text-xs text-zinc-700 hover:text-zinc-500 transition-colors cursor-pointer list-none flex items-center gap-1.5 py-1">
+            <span className="group-open:rotate-90 transition-transform inline-block text-zinc-600">▶</span>
+            <span>{untracked.length} untracked packages — not yet monitored by Vigil</span>
           </summary>
-          <div className="mt-2 bg-zinc-900/50 border border-zinc-800/50 rounded-xl overflow-hidden">
+          <div className="mt-2 flex flex-wrap gap-1.5">
             {untracked.map((pkg) => (
-              <div key={pkg.name} className="px-5 py-2.5 flex items-center gap-3 border-b border-zinc-800/30 last:border-0">
-                <span className="w-2 h-2 rounded-full bg-zinc-700 shrink-0" />
-                <span className="font-mono text-sm text-zinc-500">{pkg.name}</span>
-                <span className="text-xs text-zinc-700 font-mono ml-auto">{pkg.currentRange}</span>
-              </div>
+              <span key={pkg.name} className="font-mono text-xs text-zinc-600 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded-md">
+                {pkg.name}
+              </span>
             ))}
           </div>
+          <p className="text-xs text-zinc-700 mt-2">
+            Coverage grows as more scrapers are added.{' '}
+            <a href="https://github.com/Tusharkshahi/vigil" target="_blank" rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-zinc-500 transition-colors">
+              Contribute a scraper →
+            </a>
+          </p>
         </details>
       )}
     </div>
