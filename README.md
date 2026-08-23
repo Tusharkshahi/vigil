@@ -6,7 +6,7 @@
 
 ---
 
-![Vigil homepage — breaking change scanner](screenshots/homepage.png)
+![Vigil homepage](images/Homepage.png)
 
 ---
 
@@ -26,30 +26,43 @@ Vigil does that — and when the source sites change their layout and the scrape
 
 A Next.js web app that lets any developer check their stack without installing anything.
 
+![Vigil homepage — problem section and how it works](images/Homepage2.png)
+
+![Vigil homepage — features and CTA](images/Homepage3.png)
+
 ### Check your stack
+
 Paste a `package.json` or connect a GitHub org — see exactly which packages have breaking changes in your upgrade path.
 
-![Check your stack — paste package.json](screenshots/check-paste.png)
+![Check your stack — overview](images/Check_your_stack.png)
 
-![Check your stack — GitHub org scanner](screenshots/check-github.png)
+![Check your stack — paste package.json](images/check-paste.png)
 
-### Breaking change report
-Per-package cards showing every release with breaking changes, migration links, and expandable details.
+![Check your stack — GitHub org scanner](images/check_github.png)
 
-![Breaking change report](screenshots/report.png)
+### Breaking change registry
+
+A reference feed of every breaking change Vigil has tracked across all monitored packages.
+
+![Package feed / breaking change registry](images/report.png)
 
 ### Self-healing log
+
 A timeline of the automated healing session — from scraper failure to recovery, with no human intervention.
 
-![Self-healing log](screenshots/healing.png)
+![Self-healing log](images/Healing.png)
 
 ---
 
 ## CLI Demo
 
 ```bash
-$ vigil check react nextjs typescript --demo
+$ node dist/index.js check react next typescript --demo
+```
 
+![CLI output — vigil check --demo](images/cli_output.png)
+
+```
   Vigil — engineering change intelligence
   ──────────────────────────────────────────────────
 
@@ -74,8 +87,6 @@ $ vigil check react nextjs typescript --demo
 
   5/6 releases checked · 14 breaking changes · review before upgrading
 ```
-
-![CLI output — vigil check --demo](screenshots/cli-output.png)
 
 ---
 
@@ -154,28 +165,32 @@ npm run dev
 
 ```bash
 # Check specific packages (last 30 days)
-vigil check react nextjs typescript
+node dist/index.js check react next typescript
 
 # Run in demo mode (pre-captured data, no API key needed)
-vigil check react nextjs typescript --demo
+node dist/index.js check react next typescript --demo
 
 # Check last 7 days only
-vigil check react nextjs --days 7
+node dist/index.js check react next --days 7
 
 # Export JSON report
-vigil check react nextjs --json --output report.json
+node dist/index.js check react next --json --output report.json
 
 # Audit scraper health and trigger healing
-vigil doctor
-vigil doctor --heal
-
-# View recent detections
-vigil history --days 14
+node dist/index.js doctor
+node dist/index.js doctor --heal
 
 # Subscribe for Slack/Discord alerts
-vigil subscribe add react nextjs typescript
-vigil subscribe set-slack https://hooks.slack.com/...
-vigil subscribe set-discord https://discord.com/api/webhooks/...
+node dist/index.js subscribe add react next typescript
+node dist/index.js subscribe set-slack https://hooks.slack.com/...
+node dist/index.js subscribe set-discord https://discord.com/api/webhooks/...
+```
+
+Or install globally to use the `vigil` command:
+
+```bash
+npm link
+vigil check react next typescript --demo
 ```
 
 ### GitHub Action
@@ -192,6 +207,20 @@ Add to your repo to get PR annotations when breaking changes are detected:
     NPM_RELEASES_COLLECTOR_ID: ${{ secrets.NPM_RELEASES_COLLECTOR_ID }}
     VENDOR_CHANGELOG_COLLECTOR_ID: ${{ secrets.VENDOR_CHANGELOG_COLLECTOR_ID }}
 ```
+
+---
+
+## Packages Monitored
+
+| Package | Breaking release | Key changes |
+|---------|-----------------|-------------|
+| `react` | 19.0.0 | ReactDOM.render removed, legacy refs removed, act moved |
+| `next` | 15.0.0, 15.1.0 | Async APIs, fetch caching, requires React 19 |
+| `typescript` | 5.6.0, 5.7.0 | Iterator checks, isolatedModules stricter, ES3/ES5 targets removed |
+| `express` | 5.0.0 | path-to-regexp v8, async errors auto-forwarded, req.param() removed |
+| `eslint` | 9.0.0 | Flat config required, --ext removed, context API changes |
+| `mongoose` | 8.0.0 | Callbacks removed (promises only), strictQuery default changed |
+| `jest` | 29.0.0 | jsdom no longer default testEnvironment, legacy fakeTimers removed |
 
 ---
 
@@ -250,6 +279,7 @@ vigil/
 │   └── reporter/       # Terminal (chalk) + JSON output
 ├── demo/fixtures/      # Pre-captured data for --demo mode
 ├── schemas/            # AJV JSON schemas
+├── images/             # Screenshots
 ├── web/                # Next.js dashboard
 │   ├── app/            # Pages: /, /check, /report, /healing
 │   └── lib/            # Data layer, GitHub API, semver analysis
