@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { analyzePackages } from '../../lib/analyze';
 
-const POPULAR = ['react', 'next', 'typescript', 'express', 'eslint', 'mongoose', 'jest'];
+const POPULAR = ['react', 'next', 'typescript', 'express', 'eslint', 'vite', 'prisma'];
 
 export function InlineChecker() {
   const [query, setQuery] = useState('');

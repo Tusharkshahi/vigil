@@ -5,6 +5,8 @@ import expressReleases from './express-releases.json';
 import eslintReleases from './eslint-releases.json';
 import mongooseReleases from './mongoose-releases.json';
 import jestReleases from './jest-releases.json';
+import viteReleases from './vite-releases.json';
+import prismaReleases from './prisma-releases.json';
 
 export interface RawRelease {
   version_tag: string;
@@ -136,6 +138,8 @@ export const REPORTS: PackageReport[] = [
   processReleases(eslintReleases as RawRelease[], 'eslint', 'npm'),
   processReleases(mongooseReleases as RawRelease[], 'mongoose', 'npm'),
   processReleases(jestReleases as RawRelease[], 'jest', 'npm'),
+  processReleases(viteReleases as RawRelease[], 'vite', 'npm'),
+  processReleases(prismaReleases as RawRelease[], 'prisma', 'npm'),
 ];
 
 export const STATS = {

@@ -24,6 +24,14 @@ const ALIASES: Record<string, string> = {
   '@jest/core': 'jest',
   'jest-circus': 'jest',
   'babel-jest': 'jest',
+  // Vite
+  vite: 'vite',
+  '@vitejs/plugin-react': 'vite',
+  '@vitejs/plugin-react-swc': 'vite',
+  '@vitejs/plugin-vue': 'vite',
+  // Prisma
+  prisma: 'prisma',
+  '@prisma/client': 'prisma',
 };
 
 export interface ReleaseRisk {

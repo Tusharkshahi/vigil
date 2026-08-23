@@ -1,0 +1,26 @@
+[
+  {
+    "version_tag": "v6.0.0",
+    "publish_date": "2024-11-26",
+    "release_title": "Vite 6.0",
+    "release_notes_body": "## Vite 6.0\n\n### Breaking Changes\n\n- BREAKING CHANGE: Node.js 18 is now the minimum supported version — Node.js 14, 16, 17, 19, 21 are no longer supported.\n- BREAKING CHANGE: The default value of `resolve.conditions` has changed — it now includes the `module` condition by default. Update your config if you were relying on the previous defaults.\n- BREAKING CHANGE: `server.fs.deny` default has changed to `['.env', '.env.*', '*.{crt,pem}', '**/.git/**']` — previously only blocked `.env` files.\n- BREAKING CHANGE: `build.cssMinify` now defaults to `'esbuild'` on all builds including lib mode — previously it was disabled in lib mode.\n- BREAKING CHANGE: `optimizeDeps.entries` glob patterns now respect the `root` option — relative patterns are now resolved from `root` instead of `process.cwd()`.\n- BREAKING CHANGE: The `Environment` API is now stable — experimental environment APIs have been removed or renamed to their stable equivalents.\n\n### Migration Guide\n\nUpdate your Node.js version to 18 or higher. Review `resolve.conditions` if your build targets specific module systems. Check `server.fs.deny` if you serve files from sensitive directories.",
+    "product_page_url": "https://github.com/vitejs/vite/releases/tag/v6.0.0",
+    "input": { "url": "https://github.com/vitejs/vite/releases" }
+  },
+  {
+    "version_tag": "v5.0.0",
+    "publish_date": "2023-11-16",
+    "release_title": "Vite 5.0",
+    "release_notes_body": "## Vite 5.0\n\n### Breaking Changes\n\n- BREAKING CHANGE: Node.js 14 and 16 are no longer supported — Node.js 18+ is required.\n- BREAKING CHANGE: `define` values are now always replaced as expressions, not strings — code like `define: { 'process.env.NODE_ENV': '\"production\"' }` must be updated to remove the extra quotes.\n- BREAKING CHANGE: `import.meta.env.BASE_URL` no longer has a trailing slash in all cases — normalize manually if your code depends on the trailing slash.\n- BREAKING CHANGE: `build.modulePreload` option structure changed — `{ polyfill: true }` is now the default and the old boolean form is removed.\n- BREAKING CHANGE: CSS variables injected via `css.modules` no longer include the `vite_` prefix — update any CSS that references these custom properties.\n- BREAKING CHANGE: `vite preview` now uses `build.outDir` as the root — passing a custom root to `preview` is no longer supported.\n- BREAKING CHANGE: The legacy `@vitejs/plugin-legacy` now requires `terser` as an explicit dependency — add `terser` to your `devDependencies`.\n\n### Migration Guide\n\nUpdate Node.js to 18+. Audit your `define` values for stringification issues. Check all `import.meta.env.BASE_URL` usages. Update `build.modulePreload` config from boolean to object form.",
+    "product_page_url": "https://github.com/vitejs/vite/releases/tag/v5.0.0",
+    "input": { "url": "https://github.com/vitejs/vite/releases" }
+  },
+  {
+    "version_tag": "v4.5.0",
+    "publish_date": "2023-10-19",
+    "release_title": "Vite 4.5.0",
+    "release_notes_body": "## Vite 4.5.0\n\n### New Features\n\n- Improved HMR performance for large projects.\n- Better handling of circular imports in build mode.\n- Stability improvements to the dev server websocket connection.",
+    "product_page_url": "https://github.com/vitejs/vite/releases/tag/v4.5.0",
+    "input": { "url": "https://github.com/vitejs/vite/releases" }
+  }
+]

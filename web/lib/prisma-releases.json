@@ -1,0 +1,18 @@
+[
+  {
+    "version_tag": "v5.0.0",
+    "publish_date": "2023-07-25",
+    "release_title": "Prisma 5.0",
+    "release_notes_body": "## Prisma 5.0\n\n### Breaking Changes\n\n- BREAKING CHANGE: The `rejectOnNotFound` option is removed from all query methods — use `findUniqueOrThrow()` and `findFirstOrThrow()` instead.\n- BREAKING CHANGE: `jsonProtocol` is now the default and only query engine protocol — the `PRISMA_ENGINE_PROTOCOL=graphql` override is removed.\n- BREAKING CHANGE: The `beforeExit` hook on `PrismaClient` is removed — use process signal handlers instead.\n- BREAKING CHANGE: `runtime/index.js` import path is removed — use `@prisma/client/runtime/library` instead.\n- BREAKING CHANGE: Deprecated `prisma migrate resolve --rolled-back` flag is removed — use `--rolled_back` (underscore) instead.\n- BREAKING CHANGE: `PrismaClient` constructor no longer accepts a `__internal` option — this was an undocumented internal API.\n- BREAKING CHANGE: `previewFeatures` that graduated to stable (`fullTextSearch`, `extendedWhereUnique`, `fieldReference`) must be removed from your `schema.prisma` — keeping them will now throw a validation error.\n- BREAKING CHANGE: Removed Node.js 14 support — Node.js 16.13+ is now required.\n\n### Migration Guide\n\nReplace all `findUnique({ rejectOnNotFound: true })` with `findUniqueOrThrow()`. Remove graduated `previewFeatures` from your schema. Update any import paths from `@prisma/client/runtime` to `@prisma/client/runtime/library`.",
+    "product_page_url": "https://github.com/prisma/prisma/releases/tag/5.0.0",
+    "input": { "url": "https://github.com/prisma/prisma/releases" }
+  },
+  {
+    "version_tag": "v4.16.0",
+    "publish_date": "2023-07-05",
+    "release_title": "Prisma 4.16.0",
+    "release_notes_body": "## Prisma 4.16.0\n\n### New Features\n\n- `relationLoadStrategy` preview feature for improved relation query performance.\n- Improved error messages for schema validation failures.\n- Performance improvements to the query engine for complex where clauses.",
+    "product_page_url": "https://github.com/prisma/prisma/releases/tag/4.16.0",
+    "input": { "url": "https://github.com/prisma/prisma/releases" }
+  }
+]

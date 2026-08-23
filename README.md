@@ -223,6 +223,8 @@ Add to your repo to get PR annotations when breaking changes are detected:
 | `eslint` | 9.0.0 | Flat config required, --ext removed, context API changes |
 | `mongoose` | 8.0.0 | Callbacks removed (promises only), strictQuery default changed |
 | `jest` | 29.0.0 | jsdom no longer default testEnvironment, legacy fakeTimers removed |
+| `vite` | 5.0.0, 6.0.0 | Node 18+ required, `define` values changed, `modulePreload` config restructured |
+| `prisma` | 5.0.0 | `rejectOnNotFound` removed, `jsonProtocol` now default, graduated `previewFeatures` must be removed |
 
 ---
 
